@@ -56,7 +56,7 @@ func DefaultMainnetGenesisBlock() *genesisT.Genesis {
 		Timestamp: timestamp.Uint64(),
 		ExtraData:  extraData,
 		GasLimit:   3141592, // 0x2fefd8
-		Difficulty: big.NewInt(131072), // 0x20000
+		Difficulty: big.NewInt(4194304), // 0x400000 - Higher starting difficulty to target ~15 second block time from genesis
 		Alloc: map[common.Address]genesisT.GenesisAccount{
 			premineAddr: {Balance: premineAmount},
 		},
