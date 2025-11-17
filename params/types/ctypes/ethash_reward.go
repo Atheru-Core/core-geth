@@ -24,6 +24,29 @@ import (
 )
 
 func EthashBlockReward(c ChainConfigurator, n *big.Int) *uint256.Int {
+	// Custom block reward schedule for chain ID 192
+	// Initial reward: 4 tokens per block
+	// Halving every 8,307,692 blocks
+	if c != nil && n != nil && c.GetChainID().Cmp(big.NewInt(192)) == 0 {
+		halvingPeriod := big.NewInt(8_307_692)
+		initialReward := uint256.NewInt(4e+18) // 4 tokens in wei
+		
+		// Calculate which halving period we're in
+		halvingCount := new(big.Int).Div(n, halvingPeriod)
+		
+		// Calculate reward: initialReward / (2^halvingCount)
+		reward := new(uint256.Int).Set(initialReward)
+		for i := big.NewInt(0); i.Cmp(halvingCount) < 0; i.Add(i, big.NewInt(1)) {
+			reward.Div(reward, uint256.NewInt(2))
+		}
+		
+		// Minimum reward is 0 (will stop after enough halvings)
+		if reward.IsZero() {
+			return uint256.NewInt(0)
+		}
+		return reward
+	}
+	
 	// Select the correct block reward based on chain progression
 	blockReward := vars.FrontierBlockReward
 	if c == nil || n == nil {

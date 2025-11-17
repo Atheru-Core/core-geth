@@ -64,6 +64,14 @@ func GetRewards(config ctypes.ChainConfigurator, header *types.Header, uncles []
 // AccumulateRewards credits the coinbase of the given block with the mining
 // reward. The coinbase of each uncle block is also rewarded.
 func AccumulateRewards(config ctypes.ChainConfigurator, state *state.StateDB, header *types.Header, uncles []*types.Header) {
+	// Chain ID 192: No uncle rewards allowed (uncles are disabled)
+	if config != nil && config.GetChainID() != nil && config.GetChainID().Cmp(big.NewInt(192)) == 0 {
+		// Only give block reward, no uncle rewards
+		blockReward := ctypes.EthashBlockReward(config, header.Number)
+		state.AddBalance(header.Coinbase, blockReward)
+		return
+	}
+	
 	minerReward, uncleRewards := GetRewards(config, header, uncles)
 	for i, uncle := range uncles {
 		state.AddBalance(uncle.Coinbase, uncleRewards[i])

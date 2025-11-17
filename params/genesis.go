@@ -36,9 +36,10 @@ func DefaultGenesisBlock() *genesisT.Genesis {
 // DefaultMainnetGenesisBlock returns the mainnet genesis block (chain ID 192).
 func DefaultMainnetGenesisBlock() *genesisT.Genesis {
 	// Premine address: 0x25d835981bf2879526c5482951304eb13e4c661b
-	// Premine amount: 5,000,000 ETH = 0x43C33C1937564800000 wei
+	// Premine amount: 2,538,464 tokens (2,538,462 + 2 to reach exactly 69M total supply)
+	// 2,538,464 ETH = 0x2198A68BFF15083800000 wei
 	premineAddr := common.HexToAddress("0x25d835981bf2879526c5482951304eb13e4c661b")
-	premineAmount, _ := new(big.Int).SetString("43C33C1937564800000", 16)
+	premineAmount, _ := new(big.Int).SetString("2198A68BFF15083800000", 16)
 	
 	// Parse nonce from hex: 0x1920 = 6432 decimal
 	nonce, _ := new(big.Int).SetString("1920", 16)

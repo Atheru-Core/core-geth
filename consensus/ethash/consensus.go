@@ -44,7 +44,7 @@ import (
 
 // Ethash proof-of-work protocol constants.
 var (
-	maxUncles              = 2                // Maximum number of uncles allowed in a single block
+	maxUncles              = 0                // Maximum number of uncles allowed in a single block (disabled for chain ID 192)
 	allowedFutureBlockTime = 15 * time.Second // Max time from current time allowed for blocks, before they're considered future blocks
 )
 
