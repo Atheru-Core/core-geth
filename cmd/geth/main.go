@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with go-ethereum. If not, see <http://www.gnu.org/licenses/>.
 
-// geth is a command-line client for Ethereum.
+// aeru is a command-line client for Aeru blockchain.
 package main
 
 import (
@@ -225,7 +225,7 @@ var (
 	}
 )
 
-var app = flags.NewApp("the go-ethereum command line interface")
+var app = flags.NewApp("the Aeru Core command line interface")
 
 func init() {
 	// Initialize the CLI app and start Geth

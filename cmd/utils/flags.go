@@ -169,7 +169,7 @@ var (
 	}
 	MainnetFlag = &cli.BoolFlag{
 		Name:     "mainnet",
-		Usage:    "Ethereum mainnet",
+		Usage:    "Aeru mainnet",
 		Category: flags.EthCategory,
 	}
 	MintMeFlag = &cli.BoolFlag{
