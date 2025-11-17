@@ -25,7 +25,7 @@ const (
 	VersionMinor = 12         // Minor version component of the current release
 	VersionPatch = 21         // Patch version component of the current release
 	VersionMeta  = "unstable" // Version metadata to append to the version string
-	VersionName  = "CoreGeth"
+	VersionName  = "Aeru Core"
 )
 
 // Version holds the textual version string.

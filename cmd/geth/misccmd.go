@@ -143,7 +143,7 @@ func makedag(ctx *cli.Context) error {
 func printVersion(ctx *cli.Context) error {
 	git, _ := version.VCS()
 
-	fmt.Println(strings.Title(clientIdentifier))
+	fmt.Println("Aeru Core")
 	fmt.Println("Version:", params.VersionWithMeta)
 	if git.Commit != "" {
 		fmt.Println("Git Commit:", git.Commit)

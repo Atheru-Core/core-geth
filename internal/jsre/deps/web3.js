@@ -1777,6 +1777,8 @@ var ETH_UNITS = [
     'micro',
     'milli',
     'ether',
+    'aru',
+    'ARU',
     'grand',
     'Mether',
     'Gether',
@@ -1906,6 +1908,8 @@ var unitMap = {
     'milliether':    '1000000000000000',
     'milli':         '1000000000000000',
     'ether':        '1000000000000000000',
+    'aru':          '1000000000000000000',
+    'ARU':          '1000000000000000000',
     'kether':       '1000000000000000000000',
     'grand':        '1000000000000000000000',
     'mether':       '1000000000000000000000000',
@@ -2129,7 +2133,7 @@ var toHex = function (val) {
  * @throws error if the unit is not correct:w
  */
 var getValueOfUnit = function (unit) {
-    unit = unit ? unit.toLowerCase() : 'ether';
+    unit = unit ? unit.toLowerCase() : 'aru';
     var unitValue = unitMap[unit];
     if (unitValue === undefined) {
         throw new Error('This unit doesn\'t exists, please use the one of the following units' + JSON.stringify(unitMap, null, 2));
@@ -2138,7 +2142,7 @@ var getValueOfUnit = function (unit) {
 };
 
 /**
- * Takes a number of wei and converts it to any other ether unit.
+ * Takes a number of wei and converts it to any other unit (ARU/ether).
  *
  * Possible units are:
  *   SI Short   SI Full        Effigy       Other
@@ -2147,7 +2151,7 @@ var getValueOfUnit = function (unit) {
  * - gwei       nanoether      shannon      nano
  * - --         microether     szabo        micro
  * - --         milliether     finney       milli
- * - ether      --             --
+ * - aru/ether  --             --           (default: aru)
  * - kether                    --           grand
  * - mether
  * - gether
@@ -2155,7 +2159,7 @@ var getValueOfUnit = function (unit) {
  *
  * @method fromWei
  * @param {Number|String} number can be a number, number string or a HEX of a decimal
- * @param {String} unit the unit to convert to, default ether
+ * @param {String} unit the unit to convert to, default aru
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var fromWei = function(number, unit) {
@@ -2175,7 +2179,7 @@ var fromWei = function(number, unit) {
  * - --         microether     szabo        micro
  * - --         microether     szabo        micro
  * - --         milliether     finney       milli
- * - ether      --             --
+ * - aru/ether  --             --           (default: aru)
  * - kether                    --           grand
  * - mether
  * - gether
@@ -2183,7 +2187,7 @@ var fromWei = function(number, unit) {
  *
  * @method toWei
  * @param {Number|String|BigNumber} number can be a number, number string or a HEX of a decimal
- * @param {String} unit the unit to convert from, default ether
+ * @param {String} unit the unit to convert from, default aru
  * @return {String|Object} When given a BigNumber object it returns one as well, otherwise a number
 */
 var toWei = function(number, unit) {

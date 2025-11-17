@@ -9,11 +9,11 @@ GO ?= latest
 GORUN = go run
 ROOT_DIR := $(shell dirname $(realpath $(firstword $(MAKEFILE_LIST))))
 
-#? geth: Build geth
+#? geth: Build aeru (renamed from geth)
 geth:
 	$(GORUN) build/ci.go install ./cmd/geth
 	@echo "Done building."
-	@echo "Run \"$(GOBIN)/geth\" to launch geth."
+	@echo "Run \"$(GOBIN)/aeru\" to launch aeru."
 
 #? all: Build all packages and executables
 all:

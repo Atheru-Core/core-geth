@@ -60,20 +60,20 @@ import (
 )
 
 var (
-	// Files that end up in the geth*.zip archive.
+	// Files that end up in the aeru*.zip archive.
 	gethArchiveFiles = []string{
 		"COPYING",
-		executablePath("geth"),
+		executablePath("aeru"),
 	}
 
-	// Files that end up in the geth-alltools*.zip archive.
+	// Files that end up in the aeru-alltools*.zip archive.
 	allToolsArchiveFiles = []string{
 		"COPYING",
 		executablePath("abigen"),
 		executablePath("bootnode"),
 		executablePath("echainspec"),
 		executablePath("evm"),
-		executablePath("geth"),
+		executablePath("aeru"),
 		executablePath("rlpdump"),
 		executablePath("clef"),
 	}
@@ -97,8 +97,8 @@ var (
 			Description: "Developer utility version of the EVM (Ethereum Virtual Machine) that is capable of running bytecode snippets within a configurable environment and execution mode.",
 		},
 		{
-			BinaryName:  "geth",
-			Description: "Ethereum CLI client.",
+			BinaryName:  "aeru",
+			Description: "Aeru CLI client.",
 		},
 		{
 			BinaryName:  "rlpdump",
@@ -245,7 +245,12 @@ func doInstall(cmdline []string) {
 	for _, pkg := range packages {
 		args := make([]string, len(gobuild.Args))
 		copy(args, gobuild.Args)
-		args = append(args, "-o", executablePath(path.Base(pkg)))
+		// Rename geth binary to aeru
+		binaryName := path.Base(pkg)
+		if binaryName == "geth" {
+			binaryName = "aeru"
+		}
+		args = append(args, "-o", executablePath(binaryName))
 		args = append(args, pkg)
 		build.MustRun(&exec.Cmd{Path: gobuild.Path, Args: args, Env: gobuild.Env})
 	}
