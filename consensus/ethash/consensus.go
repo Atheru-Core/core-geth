@@ -375,8 +375,9 @@ func CalcDifficulty(config ctypes.ChainConfigurator, time uint64, parent *types.
 		// https://github.com/ethereum/EIPs/issues/100
 		// algorithm:
 		// diff = (parent_diff +
-		//         (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+		//         (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 15), -99))
 		//        ) + 2^(periodCount - 2)
+		// Custom: Changed divisor from 9 to 15 to target 15 second block time
 		out.Div(parent_time_delta(time, parent), vars.EIP100FDifficultyIncrementDivisor)
 
 		if parent.UncleHash == types.EmptyUncleHash {

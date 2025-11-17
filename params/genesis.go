@@ -40,10 +40,20 @@ func DefaultMainnetGenesisBlock() *genesisT.Genesis {
 	premineAddr := common.HexToAddress("0x25d835981bf2879526c5482951304eb13e4c661b")
 	premineAmount, _ := new(big.Int).SetString("43C33C1937564800000", 16)
 	
+	// Parse nonce from hex: 0x1920 = 6432 decimal
+	nonce, _ := new(big.Int).SetString("1920", 16)
+	
+	// Parse timestamp from hex: 0x6918b0f5 = 1763361269 decimal (Jan 18, 2025)
+	timestamp, _ := new(big.Int).SetString("6918b0f5", 16)
+	
+	// ExtraData: "Chain192" in hex = 0x436861696e313932
+	extraData := hexutil.MustDecode("0x436861696e313932000000000000000000000000000000000000000000000000")
+	
 	return &genesisT.Genesis{
 		Config:     MainnetChainConfig,
-		Nonce:      66,
-		ExtraData:  []byte{},
+		Nonce:      nonce.Uint64(),
+		Timestamp: timestamp.Uint64(),
+		ExtraData:  extraData,
 		GasLimit:   3141592, // 0x2fefd8
 		Difficulty: big.NewInt(131072), // 0x20000
 		Alloc: map[common.Address]genesisT.GenesisAccount{

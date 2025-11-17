@@ -139,12 +139,12 @@ func MakeDifficultyCalculatorU256(bombDelay *big.Int) func(time uint64, parent *
 		/*
 			https://github.com/ethereum/EIPs/issues/100
 			pDiff = parent.difficulty
-			BLOCK_DIFF_FACTOR = 9
+			BLOCK_DIFF_FACTOR = 15 (custom: 15 second block time target)
 			a = pDiff + (pDiff // BLOCK_DIFF_FACTOR) * adj_factor
 			b = min(parent.difficulty, MIN_DIFF)
 			child_diff = max(a,b )
 		*/
-		x := (time - parent.Time) / 9 // (block_timestamp - parent_timestamp) // 9
+		x := (time - parent.Time) / 15 // (block_timestamp - parent_timestamp) // 15 (custom: 15 second target)
 		c := uint64(1)                // if parent.unclehash == emptyUncleHashHash
 		if parent.UncleHash != types.EmptyUncleHash {
 			c = 2
@@ -154,12 +154,12 @@ func MakeDifficultyCalculatorU256(bombDelay *big.Int) func(time uint64, parent *
 			// x is now _negative_ adjustment factor
 			x = x - c // - ( (t-p)/p -( 2 or 1) )
 		} else {
-			x = c - x // (2 or 1) - (t-p)/9
+			x = c - x // (2 or 1) - (t-p)/15 (custom: 15 second target)
 		}
 		if x > 99 {
 			x = 99 // max(x, 99)
 		}
-		// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 9), -99))
+		// parent_diff + (parent_diff / 2048 * max((2 if len(parent.uncles) else 1) - ((timestamp - parent.timestamp) // 15), -99))
 		y := new(uint256.Int)
 		y.SetFromBig(parent.Difficulty)    // y: p_diff
 		pDiff := y.Clone()                 // pdiff: p_diff

@@ -217,7 +217,7 @@ var (
 	MinimumDifficulty                 = big.NewInt(131072) // The minimum that the difficulty may ever be.
 	DurationLimit                     = big.NewInt(13)     // The decision boundary on the blocktime duration used to determine whether difficulty should go up or not.
 	EIP2DifficultyIncrementDivisor    = big.NewInt(10)     // Is related to the equilibrium block intervals for the Homestead era difficulty evolution, redefines the value in (YP:43), originally 10 = 0xa
-	EIP100FDifficultyIncrementDivisor = big.NewInt(9)
+	EIP100FDifficultyIncrementDivisor = big.NewInt(15)     // Custom: Changed from 9 to 15 to target 15 second block time
 
 	// BeaconRootsStorageAddress is the address where historical beacon roots are stored as per EIP-4788
 	BeaconRootsStorageAddress = common.HexToAddress("0x000F3df6D732807Ef1319fB7B8bB8522d0Beac02")

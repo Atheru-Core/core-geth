@@ -70,6 +70,7 @@ var (
 
 	// MainnetChainConfig is the chain parameters to run a node on the main network (chain ID 192).
 	// All forks are activated at block 0, which is standard for new chains that want all modern features from the start.
+	// Configured for PoW mining with low difficulty and no difficulty bomb to prevent chain freezes.
 	MainnetChainConfig = &goethereum.ChainConfig{
 		ChainID:                       big.NewInt(192),
 		SupportedProtocolVersions:     vars.DefaultProtocolVersions,
@@ -83,15 +84,15 @@ var (
 		ConstantinopleBlock:           big.NewInt(0),      // Activated from genesis
 		PetersburgBlock:               big.NewInt(0),      // Activated from genesis
 		IstanbulBlock:                 big.NewInt(0),      // Activated from genesis
-		MuirGlacierBlock:              big.NewInt(0),      // Activated from genesis
+		MuirGlacierBlock:              big.NewInt(0),      // Activated from genesis (delays difficulty bomb by 9M blocks)
 		BerlinBlock:                   big.NewInt(0),      // Activated from genesis
 		LondonBlock:                   big.NewInt(0),      // Activated from genesis
-		ArrowGlacierBlock:             big.NewInt(0),      // Activated from genesis
-		GrayGlacierBlock:              big.NewInt(0),      // Activated from genesis
-		TerminalTotalDifficulty:       big.NewInt(0),      // PoS from genesis (0 means already merged)
-		TerminalTotalDifficultyPassed: true,              // Already past the merge
-		ShanghaiTime:                  nil,                // No time-based forks (or set to 0 if you want them from start)
-		CancunTime:                    nil,                // No time-based forks (or set to 0 if you want them from start)
+		ArrowGlacierBlock:             big.NewInt(0),      // Activated from genesis (delays difficulty bomb by 10.7M blocks)
+		GrayGlacierBlock:              big.NewInt(0),      // Activated from genesis (delays difficulty bomb by 11.4M blocks = effectively disabled)
+		TerminalTotalDifficulty:       nil,                // nil = PoW chain (not merged to PoS)
+		TerminalTotalDifficultyPassed: false,              // Not past the merge - this is a PoW chain
+		ShanghaiTime:                  nil,                // No time-based forks
+		CancunTime:                    nil,                // No time-based forks
 		Ethash:                        new(ctypes.EthashConfig),
 	}
 	// HoleskyChainConfig contains the chain parameters to run a node on the Holesky test network.
