@@ -109,7 +109,8 @@ type ChainConfig struct {
 // The key values are Chain IDs. These are not imported to avoid circular dependency issues and because
 // these values are expected to be eternally constant.
 var networkNames = map[string]string{
-	"1":        "mainnet",
+	"192":      "mainnet",
+	"1":        "ethereum",
 	"3":        "ropsten",
 	"4":        "rinkeby",
 	"11155111": "sepolia",

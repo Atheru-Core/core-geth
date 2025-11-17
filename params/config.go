@@ -27,7 +27,8 @@ import (
 
 // Genesis hashes to enforce below configs on.
 var (
-	MainnetGenesisHash = common.HexToHash("0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3")
+	MainnetGenesisHash = common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000") // Placeholder - will be computed from genesis.json
+	EthereumGenesisHash = common.HexToHash("0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3")
 	HoleskyGenesisHash = common.HexToHash("0xb5f7f912443c940f21fd611f12828d75b534364ed9e95ca4e307729a4661bde4")
 	SepoliaGenesisHash = common.HexToHash("0x25a5cc106eea7138acab33231d7160d69cb777ee0c2c553fcddf5138993e6dd9")
 )
@@ -41,8 +42,8 @@ func newUint64(val uint64) *uint64 { return &val }
 var (
 	MainnetTerminalTotalDifficulty, _ = new(big.Int).SetString("58_750_000_000_000_000_000_000", 0)
 
-	// MainnetChainConfig is the chain parameters to run a node on the main network.
-	MainnetChainConfig = &goethereum.ChainConfig{
+	// EthereumChainConfig is the chain parameters for Ethereum (chain ID 1).
+	EthereumChainConfig = &goethereum.ChainConfig{
 		ChainID:                       big.NewInt(1),
 		SupportedProtocolVersions:     vars.DefaultProtocolVersions,
 		HomesteadBlock:                big.NewInt(1_150_000),
@@ -64,6 +65,33 @@ var (
 		TerminalTotalDifficultyPassed: true,
 		ShanghaiTime:                  newUint64(1681338455),
 		CancunTime:                    newUint64(1710338135),
+		Ethash:                        new(ctypes.EthashConfig),
+	}
+
+	// MainnetChainConfig is the chain parameters to run a node on the main network (chain ID 192).
+	// All forks are activated at block 0, which is standard for new chains that want all modern features from the start.
+	MainnetChainConfig = &goethereum.ChainConfig{
+		ChainID:                       big.NewInt(192),
+		SupportedProtocolVersions:     vars.DefaultProtocolVersions,
+		HomesteadBlock:                big.NewInt(0),      // Activated from genesis
+		DAOForkBlock:                  nil,                // No DAO fork (set to nil to disable)
+		DAOForkSupport:                false,              // Don't support DAO fork
+		EIP150Block:                   big.NewInt(0),      // Activated from genesis
+		EIP155Block:                   big.NewInt(0),      // Activated from genesis
+		EIP158Block:                   big.NewInt(0),      // Activated from genesis
+		ByzantiumBlock:                big.NewInt(0),      // Activated from genesis
+		ConstantinopleBlock:           big.NewInt(0),      // Activated from genesis
+		PetersburgBlock:               big.NewInt(0),      // Activated from genesis
+		IstanbulBlock:                 big.NewInt(0),      // Activated from genesis
+		MuirGlacierBlock:              big.NewInt(0),      // Activated from genesis
+		BerlinBlock:                   big.NewInt(0),      // Activated from genesis
+		LondonBlock:                   big.NewInt(0),      // Activated from genesis
+		ArrowGlacierBlock:             big.NewInt(0),      // Activated from genesis
+		GrayGlacierBlock:              big.NewInt(0),      // Activated from genesis
+		TerminalTotalDifficulty:       big.NewInt(0),      // PoS from genesis (0 means already merged)
+		TerminalTotalDifficultyPassed: true,              // Already past the merge
+		ShanghaiTime:                  nil,                // No time-based forks (or set to 0 if you want them from start)
+		CancunTime:                    nil,                // No time-based forks (or set to 0 if you want them from start)
 		Ethash:                        new(ctypes.EthashConfig),
 	}
 	// HoleskyChainConfig contains the chain parameters to run a node on the Holesky test network.
@@ -294,6 +322,7 @@ var (
 // NetworkNames are user friendly names to use in the chain spec banner.
 var NetworkNames = map[string]string{
 	MainnetChainConfig.ChainID.String(): "mainnet",
+	EthereumChainConfig.ChainID.String(): "ethereum",
 	SepoliaChainConfig.ChainID.String(): "sepolia",
 	HoleskyChainConfig.ChainID.String(): "holesky",
 }

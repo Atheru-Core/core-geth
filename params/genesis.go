@@ -28,10 +28,34 @@ import (
 	"github.com/ethereum/go-ethereum/params/vars"
 )
 
-// DefaultGenesisBlock returns the Ethereum main net genesis block.
+// DefaultGenesisBlock returns the mainnet genesis block (chain ID 192).
 func DefaultGenesisBlock() *genesisT.Genesis {
+	return DefaultMainnetGenesisBlock()
+}
+
+// DefaultMainnetGenesisBlock returns the mainnet genesis block (chain ID 192).
+func DefaultMainnetGenesisBlock() *genesisT.Genesis {
+	// Premine address: 0x25d835981bf2879526c5482951304eb13e4c661b
+	// Premine amount: 5,000,000 ETH = 0x43C33C1937564800000 wei
+	premineAddr := common.HexToAddress("0x25d835981bf2879526c5482951304eb13e4c661b")
+	premineAmount, _ := new(big.Int).SetString("43C33C1937564800000", 16)
+	
 	return &genesisT.Genesis{
 		Config:     MainnetChainConfig,
+		Nonce:      66,
+		ExtraData:  []byte{},
+		GasLimit:   3141592, // 0x2fefd8
+		Difficulty: big.NewInt(131072), // 0x20000
+		Alloc: map[common.Address]genesisT.GenesisAccount{
+			premineAddr: {Balance: premineAmount},
+		},
+	}
+}
+
+// DefaultEthereumGenesisBlock returns the Ethereum genesis block (chain ID 1).
+func DefaultEthereumGenesisBlock() *genesisT.Genesis {
+	return &genesisT.Genesis{
+		Config:     EthereumChainConfig,
 		Nonce:      66,
 		ExtraData:  hexutil.MustDecode("0x11bbe8db4e347b4e8c937c1c8370e4b5ed33adb3db69cbdb7a38e1e50b1b82fa"),
 		GasLimit:   5000,

@@ -2169,6 +2169,7 @@ func SetEthConfig(ctx *cli.Context, stack *node.Node, cfg *ethconfig.Config) {
 	// This behavior matches practical expectations for how network id and chain id are normally defined.
 	switch {
 	case ctx.Bool(MainnetFlag.Name):
+		cfg.Genesis = params.DefaultGenesisBlock()
 		SetDNSDiscoveryDefaults(cfg, params.MainnetGenesisHash)
 	case ctx.Bool(HoleskyFlag.Name):
 		if !ctx.IsSet(NetworkIdFlag.Name) {
