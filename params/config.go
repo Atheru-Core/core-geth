@@ -28,7 +28,7 @@ import (
 
 // Genesis hashes to enforce below configs on.
 var (
-	MainnetGenesisHash = common.HexToHash("0x5016a5dc8211942af1139b4813254854537cf9a1215780e2e3fdeea9dace76de") // Chain ID 192 genesis hash (with difficulty 0x400000)
+	MainnetGenesisHash = common.HexToHash("0x546520194a251d9bc957745ee5bb55ef94d4e6868ca0df1db99c8fe78e872db7") // Chain ID 192 genesis hash (with Etchash enabled)
 	EthereumGenesisHash = common.HexToHash("0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3")
 	HoleskyGenesisHash = common.HexToHash("0xb5f7f912443c940f21fd611f12828d75b534364ed9e95ca4e307729a4661bde4")
 	SepoliaGenesisHash = common.HexToHash("0x25a5cc106eea7138acab33231d7160d69cb777ee0c2c553fcddf5138993e6dd9")
