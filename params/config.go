@@ -20,6 +20,7 @@ import (
 	"math/big"
 
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/params/types/coregeth"
 	"github.com/ethereum/go-ethereum/params/types/ctypes"
 	"github.com/ethereum/go-ethereum/params/types/goethereum"
 	"github.com/ethereum/go-ethereum/params/vars"
@@ -27,7 +28,7 @@ import (
 
 // Genesis hashes to enforce below configs on.
 var (
-	MainnetGenesisHash = common.HexToHash("0x0000000000000000000000000000000000000000000000000000000000000000") // Placeholder - will be computed from genesis.json
+	MainnetGenesisHash = common.HexToHash("0x5016a5dc8211942af1139b4813254854537cf9a1215780e2e3fdeea9dace76de") // Chain ID 192 genesis hash (with difficulty 0x400000)
 	EthereumGenesisHash = common.HexToHash("0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3")
 	HoleskyGenesisHash = common.HexToHash("0xb5f7f912443c940f21fd611f12828d75b534364ed9e95ca4e307729a4661bde4")
 	SepoliaGenesisHash = common.HexToHash("0x25a5cc106eea7138acab33231d7160d69cb777ee0c2c553fcddf5138993e6dd9")
@@ -70,30 +71,82 @@ var (
 
 	// MainnetChainConfig is the chain parameters to run a node on the main network (chain ID 192).
 	// All forks are activated at block 0, which is standard for new chains that want all modern features from the start.
-	// Configured for PoW mining with low difficulty and no difficulty bomb to prevent chain freezes.
-	MainnetChainConfig = &goethereum.ChainConfig{
-		ChainID:                       big.NewInt(192),
-		SupportedProtocolVersions:     vars.DefaultProtocolVersions,
-		HomesteadBlock:                big.NewInt(0),      // Activated from genesis
-		DAOForkBlock:                  nil,                // No DAO fork (set to nil to disable)
-		DAOForkSupport:                false,              // Don't support DAO fork
-		EIP150Block:                   big.NewInt(0),      // Activated from genesis
-		EIP155Block:                   big.NewInt(0),      // Activated from genesis
-		EIP158Block:                   big.NewInt(0),      // Activated from genesis
-		ByzantiumBlock:                big.NewInt(0),      // Activated from genesis
-		ConstantinopleBlock:           big.NewInt(0),      // Activated from genesis
-		PetersburgBlock:               big.NewInt(0),      // Activated from genesis
-		IstanbulBlock:                 big.NewInt(0),      // Activated from genesis
-		MuirGlacierBlock:              big.NewInt(0),      // Activated from genesis (delays difficulty bomb by 9M blocks)
-		BerlinBlock:                   big.NewInt(0),      // Activated from genesis
-		LondonBlock:                   big.NewInt(0),      // Activated from genesis
-		ArrowGlacierBlock:             big.NewInt(0),      // Activated from genesis (delays difficulty bomb by 10.7M blocks)
-		GrayGlacierBlock:              big.NewInt(0),      // Activated from genesis (delays difficulty bomb by 11.4M blocks = effectively disabled)
-		TerminalTotalDifficulty:       nil,                // nil = PoW chain (not merged to PoS)
-		TerminalTotalDifficultyPassed: false,              // Not past the merge - this is a PoW chain
-		ShanghaiTime:                  nil,                // No time-based forks
-		CancunTime:                    nil,                // No time-based forks
-		Ethash:                        new(ctypes.EthashConfig),
+	// Configured for PoW mining with Etchash (ECIP-1099) enabled from genesis, matching Ethereum Classic's consensus.
+	MainnetChainConfig = &coregeth.CoreGethChainConfig{
+		NetworkID:                 192,
+		ChainID:                   big.NewInt(192),
+		SupportedProtocolVersions: vars.DefaultProtocolVersions,
+		Ethash:                    new(ctypes.EthashConfig),
+
+		// Homestead forks (EIP-2, EIP-7)
+		EIP2FBlock: big.NewInt(0), // Activated from genesis
+		EIP7FBlock: big.NewInt(0), // Activated from genesis
+
+		// DAO fork disabled
+		DAOForkBlock: nil, // No DAO fork
+
+		// Tangerine Whistle (EIP-150)
+		EIP150Block: big.NewInt(0), // Activated from genesis
+
+		// Spurious Dragon (EIP-155, EIP-160, EIP-161, EIP-170)
+		EIP155Block:  big.NewInt(0), // Activated from genesis
+		EIP160FBlock: big.NewInt(0), // Activated from genesis
+		EIP161FBlock: big.NewInt(0), // Activated from genesis
+		EIP170FBlock: big.NewInt(0), // Activated from genesis
+
+		// Byzantium (EIP-100, EIP-140, EIP-198, EIP-211, EIP-212, EIP-213, EIP-214, EIP-658)
+		EIP100FBlock: big.NewInt(0), // Activated from genesis
+		EIP140FBlock: big.NewInt(0), // Activated from genesis
+		EIP198FBlock: big.NewInt(0), // Activated from genesis
+		EIP211FBlock: big.NewInt(0), // Activated from genesis
+		EIP212FBlock: big.NewInt(0), // Activated from genesis
+		EIP213FBlock: big.NewInt(0), // Activated from genesis
+		EIP214FBlock: big.NewInt(0), // Activated from genesis
+		EIP658FBlock: big.NewInt(0), // Activated from genesis
+
+		// Constantinople (EIP-145, EIP-1014, EIP-1052)
+		EIP145FBlock:  big.NewInt(0), // Activated from genesis
+		EIP1014FBlock: big.NewInt(0), // Activated from genesis
+		EIP1052FBlock: big.NewInt(0), // Activated from genesis
+		PetersburgBlock: big.NewInt(0), // Activated from genesis (EIP-1283 disabled)
+
+		// Istanbul (EIP-152, EIP-1108, EIP-1344, EIP-1884, EIP-2028, EIP-2200)
+		EIP152FBlock:  big.NewInt(0), // Activated from genesis
+		EIP1108FBlock: big.NewInt(0), // Activated from genesis
+		EIP1344FBlock: big.NewInt(0), // Activated from genesis
+		EIP1884FBlock: big.NewInt(0), // Activated from genesis
+		EIP2028FBlock: big.NewInt(0), // Activated from genesis
+		EIP2200FBlock: big.NewInt(0), // Activated from genesis
+
+		// Berlin (EIP-2565, EIP-2718, EIP-2929, EIP-2930)
+		EIP2565FBlock: big.NewInt(0), // Activated from genesis
+		EIP2718FBlock: big.NewInt(0), // Activated from genesis
+		EIP2929FBlock: big.NewInt(0), // Activated from genesis
+		EIP2930FBlock: big.NewInt(0), // Activated from genesis
+
+		// London (EIP-3529, EIP-3541)
+		EIP3529FBlock: big.NewInt(0), // Activated from genesis
+		EIP3541FBlock: big.NewInt(0), // Activated from genesis
+
+		// Shanghai/Cancun (EIP-3651, EIP-3855, EIP-3860, EIP-6049)
+		EIP3651FBlock: big.NewInt(0), // Activated from genesis
+		EIP3855FBlock: big.NewInt(0), // Activated from genesis
+		EIP3860FBlock: big.NewInt(0), // Activated from genesis
+		EIP6049FBlock: big.NewInt(0), // Activated from genesis
+
+		// Ethereum Classic specific
+		ECIP1010PauseBlock: nil, // No difficulty bomb (PoW chain)
+		ECIP1010Length:     nil, // No difficulty bomb
+		ECIP1017FBlock:     nil, // Disable ETC halving (using custom halving instead)
+		ECIP1017EraRounds: nil, // Disable ETC halving
+		DisposalBlock:     nil, // No disposal block needed
+
+		// Etchash (ECIP-1099) - Enabled from genesis for ASIC resistance
+		ECIP1099FBlock: big.NewInt(0), // Etchash enabled from block 0 (doubles epoch length to 60,000 blocks)
+
+		// PoW chain (not merged)
+		TerminalTotalDifficulty:       nil,
+		TerminalTotalDifficultyPassed: false,
 	}
 	// HoleskyChainConfig contains the chain parameters to run a node on the Holesky test network.
 	HoleskyChainConfig = &goethereum.ChainConfig{
