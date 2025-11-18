@@ -22,7 +22,8 @@ import "github.com/ethereum/go-ethereum/common"
 // the Aeru mainnet (chain ID 192).
 var MainnetBootnodes = []string{
 	// Aeru Core Bootstrap Node
-	"enode://d473bc0931adaecb4ff4af7dbe17fe3aa1225396f30b7e87f19b7f5c5a83bcd41c0a2edc90849c14e3377385aac49efc14debab412b198be1e66453859ac61c8@198.96.88.150:30303", // Aeru mainnet bootnode
+	"enode://d473bc0931adaecb4ff4af7dbe17fe3aa1225396f30b7e87f19b7f5c5a83bcd41c0a2edc90849c14e3377385aac49efc14debab412b198be1e66453859ac61c8@198.96.88.150:30303", // Aeru mainnet bootnode - New Jersey, USA
+	"enode://cf69af7f4104b1265d1a7d9cf544bb235fe46974757e1ebf3d3b3637e6488628b76c4102a7eaae533ff3685a2220a360238e958d7d4f94119554d71a0f3dcd39@194.163.176.18:30303", // Aeru mainnet bootnode - Hub Europe, Second Node
 }
 
 // HoleskyBootnodes are the enode URLs of the P2P bootstrap nodes running on the
