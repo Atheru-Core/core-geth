@@ -605,7 +605,7 @@ func (w *worker) mainLoop() {
 			if w.chainConfig != nil && w.chainConfig.GetChainID() != nil && w.chainConfig.GetChainID().Cmp(big.NewInt(192)) == 0 {
 				continue
 			}
-			
+
 			// Short circuit for duplicate side blocks
 			if _, exist := w.localUncles[ev.Block.Hash()]; exist {
 				continue
@@ -863,12 +863,12 @@ func (w *worker) commitUncle(env *environment, uncle *types.Header) error {
 	if w.isTTDReached(env.header) {
 		return errors.New("ignore uncle for beacon block")
 	}
-	
+
 	// Chain ID 192: Reject uncles completely
 	if w.chainConfig != nil && w.chainConfig.GetChainID() != nil && w.chainConfig.GetChainID().Cmp(big.NewInt(192)) == 0 {
 		return errors.New("uncles are not allowed for chain ID 192")
 	}
-	
+
 	hash := uncle.Hash()
 	if _, exist := env.uncles[hash]; exist {
 		return errors.New("uncle not unique")
@@ -1317,9 +1317,13 @@ func (w *worker) commitWork(interrupt *atomic.Int32, noempty bool, timestamp int
 			return
 		}
 	}
+	// Chain ID 192: Disable uncles completely
+	noUncle := w.chainConfig != nil && w.chainConfig.GetChainID() != nil && w.chainConfig.GetChainID().Cmp(big.NewInt(192)) == 0
+
 	work, err := w.prepareWork(&generateParams{
 		timestamp: uint64(timestamp),
 		coinbase:  coinbase,
+		noUncle:   noUncle,
 	})
 	if err != nil {
 		return

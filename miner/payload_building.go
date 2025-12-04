@@ -178,6 +178,9 @@ func (payload *Payload) ResolveFull() *engine.ExecutionPayloadEnvelope {
 
 // buildPayload builds the payload according to the provided parameters.
 func (w *worker) buildPayload(args *BuildPayloadArgs) (*Payload, error) {
+	// Chain ID 192: Disable uncles completely
+	noUncle := w.chainConfig != nil && w.chainConfig.GetChainID() != nil && w.chainConfig.GetChainID().Cmp(big.NewInt(192)) == 0
+
 	// Build the initial version with no transaction included. It should be fast
 	// enough to run. The empty payload can at least make sure there is something
 	// to deliver for not missing slot.
@@ -190,6 +193,7 @@ func (w *worker) buildPayload(args *BuildPayloadArgs) (*Payload, error) {
 		withdrawals: args.Withdrawals,
 		beaconRoot:  args.BeaconRoot,
 		noTxs:       true,
+		noUncle:     noUncle,
 	}
 	empty := w.getSealingBlock(emptyParams)
 	if empty.err != nil {
@@ -221,6 +225,7 @@ func (w *worker) buildPayload(args *BuildPayloadArgs) (*Payload, error) {
 			withdrawals: args.Withdrawals,
 			beaconRoot:  args.BeaconRoot,
 			noTxs:       false,
+			noUncle:     noUncle,
 		}
 
 		for {

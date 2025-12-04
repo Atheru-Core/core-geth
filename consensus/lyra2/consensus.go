@@ -160,7 +160,7 @@ func (lyra2 *Lyra2) VerifyUncles(chain consensus.ChainReader, block *types.Block
 	if lyra2.fakeMode {
 		return nil
 	}
-	
+
 	// Chain ID 192: Reject any blocks with uncles (uncles are completely disabled)
 	config := chain.Config()
 	if config != nil && config.GetChainID() != nil && config.GetChainID().Cmp(big.NewInt(192)) == 0 {
@@ -169,7 +169,7 @@ func (lyra2 *Lyra2) VerifyUncles(chain consensus.ChainReader, block *types.Block
 		}
 		return nil
 	}
-	
+
 	// Verify that there are at most 2 uncles included in this block
 	if len(block.Uncles()) > maxUncles {
 		return errTooManyUncles

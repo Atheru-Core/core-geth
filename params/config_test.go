@@ -159,17 +159,17 @@ func TestCheckCompatible(t *testing.T) {
 		{
 			stored: MainnetChainConfig,
 			new: func() ctypes.ChainConfigurator {
-				c := &goethereum.ChainConfig{}
+				c := &coregeth.CoreGethChainConfig{}
 				*c = *MainnetChainConfig
-				c.SetChainID(new(big.Int).Sub(MainnetChainConfig.EIP155Block, common.Big1))
+				c.SetChainID(new(big.Int).Sub(MainnetChainConfig.ChainID, common.Big1))
 				return c
 			}(),
-			headBlock: MainnetChainConfig.EIP158Block.Uint64(),
+			headBlock: MainnetChainConfig.EIP161FBlock.Uint64(),
 			wantErr: &confp.ConfigCompatError{
 				What:          "EIP155 chain ID",
 				StoredBlock:   MainnetChainConfig.EIP155Block,
 				NewBlock:      MainnetChainConfig.EIP155Block,
-				RewindToBlock: new(big.Int).Sub(MainnetChainConfig.EIP158Block, common.Big1).Uint64(),
+				RewindToBlock: new(big.Int).Sub(MainnetChainConfig.EIP161FBlock, common.Big1).Uint64(),
 			},
 		},
 		{
