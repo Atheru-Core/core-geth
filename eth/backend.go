@@ -146,11 +146,21 @@ func New(stack *node.Node, config *ethconfig.Config) (*Ethereum, error) {
 			log.Error("Failed to recover state", "error", err)
 		}
 	}
+	// Load chain config from database first (if already initialized) or from genesis
+	chainConfig, err := core.LoadChainConfig(chainDb, config.Genesis)
+	if err != nil {
+		return nil, err
+	}
+
 	// Transfer mining-related config to the ethash config.
 	ethashConfig := config.Ethash
 	ethashConfig.NotifyFull = config.Miner.NotifyFull
 
-	if config.Genesis != nil && config.Genesis.Config != nil {
+	// Get ECIP1099Block from chain config (loaded from database) if available, otherwise from genesis
+	if chainConfig != nil {
+		ethashConfig.ECIP1099Block = chainConfig.GetEthashECIP1099Transition()
+	}
+	if ethashConfig.ECIP1099Block == nil && config.Genesis != nil && config.Genesis.Config != nil {
 		ethashConfig.ECIP1099Block = config.Genesis.GetEthashECIP1099Transition()
 	}
 
@@ -161,11 +171,6 @@ func New(stack *node.Node, config *ethconfig.Config) (*Ethereum, error) {
 
 	// Chain ID 192 uses Etchash (ECIP-1099), not Lyra2
 	engine := ethconfig.CreateConsensusEngine(stack, &ethashConfig, cliqueConfig, config.Miner.Notify, config.Miner.Noverify, chainDb)
-
-	chainConfig, err := core.LoadChainConfig(chainDb, config.Genesis)
-	if err != nil {
-		return nil, err
-	}
 	networkID := config.NetworkId
 	if networkID == 0 {
 		networkID = chainConfig.GetChainID().Uint64()
