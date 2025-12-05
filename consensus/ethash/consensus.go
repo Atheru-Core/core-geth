@@ -44,7 +44,7 @@ import (
 
 // Ethash proof-of-work protocol constants.
 var (
-	maxUncles              = 0                // Maximum number of uncles allowed in a single block (disabled for chain ID 192)
+	maxUncles              = 2                // Maximum number of uncles allowed in a single block
 	allowedFutureBlockTime = 15 * time.Second // Max time from current time allowed for blocks, before they're considered future blocks
 )
 
@@ -175,18 +175,13 @@ func (ethash *Ethash) VerifyUncles(chain consensus.ChainReader, block *types.Blo
 	if ethash.config.PowMode == ModeFullFake {
 		return nil
 	}
-	
-	// Chain ID 192: Reject any blocks with uncles (uncles are completely disabled)
-	config := chain.Config()
-	if config != nil && config.GetChainID() != nil && config.GetChainID().Cmp(big.NewInt(192)) == 0 {
-		if len(block.Uncles()) > 0 {
-			return errors.New("uncles are not allowed for chain ID 192")
-		}
-		return nil
-	}
-	
+
 	// Verify that there are at most 2 uncles included in this block
-	if len(block.Uncles()) > maxUncles {
+	// Note: For Chain ID 192, the miner will not include uncles, but we still
+	// accept blocks with uncles to maintain consensus compatibility. Uncle rewards
+	// are handled separately in the reward calculation.
+	maxAllowedUncles := 2
+	if len(block.Uncles()) > maxAllowedUncles {
 		return errTooManyUncles
 	}
 	if len(block.Uncles()) == 0 {

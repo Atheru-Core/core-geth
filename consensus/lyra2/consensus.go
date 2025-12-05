@@ -161,16 +161,10 @@ func (lyra2 *Lyra2) VerifyUncles(chain consensus.ChainReader, block *types.Block
 		return nil
 	}
 
-	// Chain ID 192: Reject any blocks with uncles (uncles are completely disabled)
-	config := chain.Config()
-	if config != nil && config.GetChainID() != nil && config.GetChainID().Cmp(big.NewInt(192)) == 0 {
-		if len(block.Uncles()) > 0 {
-			return errors.New("uncles are not allowed for chain ID 192")
-		}
-		return nil
-	}
-
 	// Verify that there are at most 2 uncles included in this block
+	// Note: For Chain ID 192, the miner will not include uncles, but we still
+	// accept blocks with uncles to maintain consensus compatibility. Uncle rewards
+	// are handled separately in the reward calculation.
 	if len(block.Uncles()) > maxUncles {
 		return errTooManyUncles
 	}
