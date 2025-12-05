@@ -28,10 +28,10 @@ import (
 
 // Genesis hashes to enforce below configs on.
 var (
-	MainnetGenesisHash = common.HexToHash("0x546520194a251d9bc957745ee5bb55ef94d4e6868ca0df1db99c8fe78e872db7") // Chain ID 192 genesis hash (with Etchash enabled)
+	MainnetGenesisHash  = common.HexToHash("0x546520194a251d9bc957745ee5bb55ef94d4e6868ca0df1db99c8fe78e872db7") // Chain ID 192 genesis hash (with Etchash enabled)
 	EthereumGenesisHash = common.HexToHash("0xd4e56740f876aef8c010b86a40d5f56745a118d0906a34e69aec8c0db1cb8fa3")
-	HoleskyGenesisHash = common.HexToHash("0xb5f7f912443c940f21fd611f12828d75b534364ed9e95ca4e307729a4661bde4")
-	SepoliaGenesisHash = common.HexToHash("0x25a5cc106eea7138acab33231d7160d69cb777ee0c2c553fcddf5138993e6dd9")
+	HoleskyGenesisHash  = common.HexToHash("0xb5f7f912443c940f21fd611f12828d75b534364ed9e95ca4e307729a4661bde4")
+	SepoliaGenesisHash  = common.HexToHash("0x25a5cc106eea7138acab33231d7160d69cb777ee0c2c553fcddf5138993e6dd9")
 )
 
 // CheckpointOracles associates each known checkpoint oracles with the genesis hash of
@@ -105,9 +105,9 @@ var (
 		EIP658FBlock: big.NewInt(0), // Activated from genesis
 
 		// Constantinople (EIP-145, EIP-1014, EIP-1052)
-		EIP145FBlock:  big.NewInt(0), // Activated from genesis
-		EIP1014FBlock: big.NewInt(0), // Activated from genesis
-		EIP1052FBlock: big.NewInt(0), // Activated from genesis
+		EIP145FBlock:    big.NewInt(0), // Activated from genesis
+		EIP1014FBlock:   big.NewInt(0), // Activated from genesis
+		EIP1052FBlock:   big.NewInt(0), // Activated from genesis
 		PetersburgBlock: big.NewInt(0), // Activated from genesis (EIP-1283 disabled)
 
 		// Istanbul (EIP-152, EIP-1108, EIP-1344, EIP-1884, EIP-2028, EIP-2200)
@@ -124,9 +124,11 @@ var (
 		EIP2929FBlock: big.NewInt(0), // Activated from genesis
 		EIP2930FBlock: big.NewInt(0), // Activated from genesis
 
-		// London (EIP-3529, EIP-3541)
-		EIP3529FBlock: big.NewInt(0), // Activated from genesis
-		EIP3541FBlock: big.NewInt(0), // Activated from genesis
+		// London (EIP-1559, EIP-3198, EIP-3529, EIP-3541)
+		EIP1559FBlock: big.NewInt(0), // Activated from genesis - Dynamic fee transactions (type 2)
+		EIP3198FBlock: big.NewInt(0), // Activated from genesis - BASEFEE opcode
+		EIP3529FBlock: big.NewInt(0), // Activated from genesis - Reduction in refunds
+		EIP3541FBlock: big.NewInt(0), // Activated from genesis - Reject contracts starting with 0xEF
 
 		// Shanghai/Cancun (EIP-3651, EIP-3855, EIP-3860, EIP-6049)
 		EIP3651FBlock: big.NewInt(0), // Activated from genesis
@@ -138,8 +140,8 @@ var (
 		ECIP1010PauseBlock: nil, // No difficulty bomb (PoW chain)
 		ECIP1010Length:     nil, // No difficulty bomb
 		ECIP1017FBlock:     nil, // Disable ETC halving (using custom halving instead)
-		ECIP1017EraRounds: nil, // Disable ETC halving
-		DisposalBlock:     nil, // No disposal block needed
+		ECIP1017EraRounds:  nil, // Disable ETC halving
+		DisposalBlock:      nil, // No disposal block needed
 
 		// Etchash (ECIP-1099) - Enabled from genesis for ASIC resistance
 		ECIP1099FBlock: big.NewInt(0), // Etchash enabled from block 0 (doubles epoch length to 60,000 blocks)
@@ -375,10 +377,10 @@ var (
 
 // NetworkNames are user friendly names to use in the chain spec banner.
 var NetworkNames = map[string]string{
-	MainnetChainConfig.ChainID.String(): "mainnet",
+	MainnetChainConfig.ChainID.String():  "mainnet",
 	EthereumChainConfig.ChainID.String(): "ethereum",
-	SepoliaChainConfig.ChainID.String(): "sepolia",
-	HoleskyChainConfig.ChainID.String(): "holesky",
+	SepoliaChainConfig.ChainID.String():  "sepolia",
+	HoleskyChainConfig.ChainID.String():  "holesky",
 }
 
 /*
