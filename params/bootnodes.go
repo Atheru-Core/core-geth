@@ -24,6 +24,7 @@ var MainnetBootnodes = []string{
 	// Aeru Core Bootstrap Node
 	"enode://d473bc0931adaecb4ff4af7dbe17fe3aa1225396f30b7e87f19b7f5c5a83bcd41c0a2edc90849c14e3377385aac49efc14debab412b198be1e66453859ac61c8@198.96.88.150:30303",  // Aeru mainnet bootnode - New Jersey, USA
 	"enode://3e1daa2d90ccd482958ac7ec857719bbb95af081dc2dda2001763e9bf50c5aab76001bedfafa4c2aa4a03d1739e080dc268a1873d3223e845ff673e442e02bce@194.163.176.18:30303", // Aeru mainnet bootnode - Hub Europe, Second Node
+	"enode://cdab8c7066c1ae086deef88bea97f58a1cb59d445619112f03e7f26263c11514fead50a2a8ec1f6017b0dea065097af07cb6a6864826b221d6bcff3adde57c4d@185.185.83.235:30303", // Aeru mainnet bootnode
 }
 
 // HoleskyBootnodes are the enode URLs of the P2P bootstrap nodes running on the
