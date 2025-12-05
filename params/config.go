@@ -143,8 +143,8 @@ var (
 		ECIP1017EraRounds:  nil, // Disable ETC halving
 		DisposalBlock:      nil, // No disposal block needed
 
-		// Etchash (ECIP-1099) - Enabled from genesis for ASIC resistance
-		ECIP1099FBlock: big.NewInt(0), // Etchash enabled from block 0 (doubles epoch length to 60,000 blocks)
+		// Etchash (ECIP-1099) - Enabled from block 60000 for ASIC resistance and Jasminer compatibility
+		ECIP1099FBlock: big.NewInt(60000), // Etchash enabled from block 60000 (doubles epoch length to 60,000 blocks)
 
 		// PoW chain (not merged)
 		TerminalTotalDifficulty:       nil,
