@@ -124,11 +124,11 @@ var (
 		EIP2929FBlock: big.NewInt(0), // Activated from genesis
 		EIP2930FBlock: big.NewInt(0), // Activated from genesis
 
-		// London (EIP-1559, EIP-3198, EIP-3529, EIP-3541)
-		EIP1559FBlock: big.NewInt(0), // Activated from genesis - Dynamic fee transactions (type 2)
-		EIP3198FBlock: big.NewInt(0), // Activated from genesis - BASEFEE opcode
-		EIP3529FBlock: big.NewInt(0), // Activated from genesis - Reduction in refunds
-		EIP3541FBlock: big.NewInt(0), // Activated from genesis - Reject contracts starting with 0xEF
+		// London (partial at genesis, EIP-1559 added at block 10000)
+		EIP1559FBlock: big.NewInt(10000), // HARD FORK: Enable EIP-1559 dynamic fees at block 10000
+		EIP3198FBlock: big.NewInt(10000), // HARD FORK: Enable BASEFEE opcode at block 10000
+		EIP3529FBlock: big.NewInt(0),     // Activated from genesis
+		EIP3541FBlock: big.NewInt(0),     // Activated from genesis
 
 		// Shanghai/Cancun (EIP-3651, EIP-3855, EIP-3860, EIP-6049)
 		EIP3651FBlock: big.NewInt(0), // Activated from genesis
