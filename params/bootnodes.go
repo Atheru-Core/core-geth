@@ -23,8 +23,10 @@ import "github.com/ethereum/go-ethereum/common"
 var MainnetBootnodes = []string{
 	// Aeru Core Bootstrap Node
 	"enode://d473bc0931adaecb4ff4af7dbe17fe3aa1225396f30b7e87f19b7f5c5a83bcd41c0a2edc90849c14e3377385aac49efc14debab412b198be1e66453859ac61c8@198.96.88.150:30303",  // Aeru mainnet bootnode - New Jersey, USA
-	"enode://3e1daa2d90ccd482958ac7ec857719bbb95af081dc2dda2001763e9bf50c5aab76001bedfafa4c2aa4a03d1739e080dc268a1873d3223e845ff673e442e02bce@194.163.176.18:30303", // Aeru mainnet bootnode - Hub Europe, Second Node
+	"enode://34a78a03045290921174fc15ba7910f2a0ff6d47c4945b2993dc6c4583dc5a71a3de8def5b84870635f3ea95fb6655229577fc969c6acd7ff8a2be649d358574@194.163.176.18:30303", // Aeru mainnet bootnode - Hub Europe, Second Node
 	"enode://cdab8c7066c1ae086deef88bea97f58a1cb59d445619112f03e7f26263c11514fead50a2a8ec1f6017b0dea065097af07cb6a6864826b221d6bcff3adde57c4d@185.185.83.235:30303", // Aeru mainnet bootnode
+	"enode://42081de1297a9932c15f308af9ba17c8b5172039c0d002ae7cfbcb6298540c37b1fd066749186b621c0cc837d0f44d37c8cc99fa5f8ca44ad86963efa6697454@89.20.106.51:30303",   // Aeru mainnet bootnode - Russia
+	"enode://adc02219b078ede1e15ca80bf6f6c4e8b42757df28831a8b76e648601a4b0377014dd7afb9179ca01166aa55aca3358aef27a153993f9b274e855bb5b9184097@188.225.46.184:30303", // Aeru mainnet bootnode - Russia
 }
 
 // HoleskyBootnodes are the enode URLs of the P2P bootstrap nodes running on the
