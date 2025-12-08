@@ -33,6 +33,17 @@ CRCCheck on
 !define APPNAME "Aeru Core"
 !define DESCRIPTION "Aeru Core - Ethereum client for Chain ID 192"
 
+# Add version information to reduce false positives
+# Note: BUILDVERSION may contain commit hash, so we use a clean numeric version
+# VIProductVersion requires format X.X.X.X (all numeric)
+VIProductVersion "${MAJORVERSION}.${MINORVERSION}.${BUILDVERSION}.0"
+VIAddVersionKey "ProductName" "${APPNAME}"
+VIAddVersionKey "ProductVersion" "${MAJORVERSION}.${MINORVERSION}.${BUILDVERSION}"
+VIAddVersionKey "FileDescription" "${DESCRIPTION}"
+VIAddVersionKey "FileVersion" "${MAJORVERSION}.${MINORVERSION}.${BUILDVERSION}"
+VIAddVersionKey "CompanyName" "${GROUPNAME}"
+VIAddVersionKey "LegalCopyright" "Copyright 2025 ${GROUPNAME}"
+
 # Define NSIS_MAX_STRLEN for Large Strings build (supports up to 8192 characters)
 # This must be defined BEFORE including PathUpdate.nsh
 !ifndef NSIS_MAX_STRLEN
@@ -44,8 +55,9 @@ CRCCheck on
 # Require admin rights on NT6+ (When UAC is turned on)
 RequestExecutionLevel admin
 
-# Use LZMA compression
-SetCompressor /SOLID lzma
+# Use Zlib compression (less likely to trigger false positives than LZMA)
+# LZMA is more efficient but often triggers antivirus heuristics
+SetCompressor /SOLID zlib
 
 !include LogicLib.nsh
 !include PathUpdate.nsh

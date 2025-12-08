@@ -1050,19 +1050,28 @@ func doWindowsInstaller(cmdline []string) {
 	// Build the installer. This assumes that all the needed files have been previously
 	// built (don't mix building and packaging to keep cross compilation complexity to a
 	// minimum).
+	// Use clean version without commit hash for release builds
 	version := strings.Split(params.Version, ".")
-	if env.Commit != "" {
-		version[2] += "-" + env.Commit[:8]
-	}
-	installer, err := filepath.Abs("aeru-" + archiveBasename(*arch, params.ArchiveVersion(env.Commit)) + ".exe")
+	// Don't append commit hash for clean release builds
+	// if env.Commit != "" {
+	// 	version[2] += "-" + env.Commit[:8]
+	// }
+	// Use clean version for installer filename (without commit hash)
+	installer, err := filepath.Abs("aeru-" + archiveBasename(*arch, params.Version) + ".exe")
 	if err != nil {
 		log.Fatalf("Failed to convert installer file path: %v", err)
+	}
+	// Extract clean numeric version for VIProductVersion (remove any commit hash)
+	buildVersion := version[2]
+	// Remove any non-numeric suffix (like commit hash)
+	if idx := strings.Index(buildVersion, "-"); idx > 0 {
+		buildVersion = buildVersion[:idx]
 	}
 	build.MustRunCommand("makensis.exe",
 		"/DOUTPUTFILE="+installer,
 		"/DMAJORVERSION="+version[0],
 		"/DMINORVERSION="+version[1],
-		"/DBUILDVERSION="+version[2],
+		"/DBUILDVERSION="+buildVersion,
 		"/DARCH="+*arch,
 		filepath.Join(*workdir, "geth.nsi"),
 	)
