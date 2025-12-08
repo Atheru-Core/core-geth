@@ -17,6 +17,9 @@
 // Implements interaction with EVMC-based VMs.
 // https://github.com/ethereum/evmc
 
+//go:build !windows
+// +build !windows
+
 package vm
 
 import (

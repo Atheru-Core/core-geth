@@ -22,12 +22,26 @@ import "github.com/ethereum/go-ethereum/common"
 // the Aeru mainnet (chain ID 192).
 var MainnetBootnodes = []string{
 	// Aeru Core Bootstrap Node
-	"enode://d473bc0931adaecb4ff4af7dbe17fe3aa1225396f30b7e87f19b7f5c5a83bcd41c0a2edc90849c14e3377385aac49efc14debab412b198be1e66453859ac61c8@198.96.88.150:30303",  // Aeru mainnet bootnode - New Jersey, USA
-	"enode://34a78a03045290921174fc15ba7910f2a0ff6d47c4945b2993dc6c4583dc5a71a3de8def5b84870635f3ea95fb6655229577fc969c6acd7ff8a2be649d358574@194.163.176.18:30303", // Aeru mainnet bootnode - Hub Europe, Second Node
-	"enode://cdab8c7066c1ae086deef88bea97f58a1cb59d445619112f03e7f26263c11514fead50a2a8ec1f6017b0dea065097af07cb6a6864826b221d6bcff3adde57c4d@185.185.83.235:30303", // Aeru mainnet bootnode
-	"enode://42081de1297a9932c15f308af9ba17c8b5172039c0d002ae7cfbcb6298540c37b1fd066749186b621c0cc837d0f44d37c8cc99fa5f8ca44ad86963efa6697454@89.20.106.51:30303",   // Aeru mainnet bootnode - Russia
-	"enode://adc02219b078ede1e15ca80bf6f6c4e8b42757df28831a8b76e648601a4b0377014dd7afb9179ca01166aa55aca3358aef27a153993f9b274e855bb5b9184097@188.225.46.184:30303", // Aeru mainnet bootnode - Russia
-	"enode://2140edf8b69a46acd489a195b9eac4f41f207edea1085b1fcc2224bfa413b31ac832055d487f5ca6a472d8f6feefa2637151ed4b3fa4b3e45927e6846f0293f4@99.110.149.193:30303", // Aeru mainnet bootnode - USA
+	"enode://d473bc0931adaecb4ff4af7dbe17fe3aa1225396f30b7e87f19b7f5c5a83bcd41c0a2edc90849c14e3377385aac49efc14debab412b198be1e66453859ac61c8@198.96.88.150:30303",                                                                        // Aeru mainnet bootnode - New Jersey, USA
+	"enr:-KW4QGVkhj9wh6VD1AR_U_Wkn4XtXPBxZb3TROJpHpYBLLY7cslbRHaoO23iB_3in-UIeCWmxfgdYQy33c7KTtynBZ-GAZqRiXVEg2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCExmBYlolzZWNwMjU2azGhAtRzvAkxra7LT_Svfb4X_jqhIlOW8wt-h_Gbf1xag7zUhHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // ENR for 198.96.88.150
+	"enode://34a78a03045290921174fc15ba7910f2a0ff6d47c4945b2993dc6c4583dc5a71a3de8def5b84870635f3ea95fb6655229577fc969c6acd7ff8a2be649d358574@194.163.176.18:30303",                                                                       // Aeru mainnet bootnode - Hub Europe, Second Node
+	"enr:-KW4QNcCSzPKGsw5kjLia9SY_3imSstOMHuiEZNGE2fXfZ4ePO4q_L6En02Qv4oHPw984N1KNBE94eO4WvO-C1jwfJGGAZry5Khig2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCEwqOwEolzZWNwMjU2azGhAjSnigMEUpCSEXT8Fbp5EPKg_21HxJRbKZPcbEWD3FpxhHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // ENR for 194.163.176.18
+	"enode://cdab8c7066c1ae086deef88bea97f58a1cb59d445619112f03e7f26263c11514fead50a2a8ec1f6017b0dea065097af07cb6a6864826b221d6bcff3adde57c4d@185.185.83.235:30303",                                                                       // Aeru mainnet bootnode
+	"enr:-KW4QHrXVVBmp_cY1mw7pGBtbAKTbiIuKKf89nIlTeg0kwPUDnhBr85JHaMaAYuB-gWx14yzze4BSqsvnLgknCXZpzSGAZrs65myg2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCEublT64lzZWNwMjU2azGhA82rjHBmwa4Ibe74i-qX9YoctZ1EVhkRLwPn8mJjwRUUhHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // ENR for 185.185.83.235
+	"enode://42081de1297a9932c15f308af9ba17c8b5172039c0d002ae7cfbcb6298540c37b1fd066749186b621c0cc837d0f44d37c8cc99fa5f8ca44ad86963efa6697454@89.20.106.51:30303",                                                                         // Aeru mainnet bootnode - Russia
+	"enr:-KW4QP2i-wzOEcSz77CghHLSIF-NrL5MKcSdQFxFKTZAW0jiHmsVTU8YselHeW-oq3FOoXs_s3cq3tF5AmClw-NyTE2GAZry-rbdg2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCEWRRqM4lzZWNwMjU2azGhAkIIHeEpepkywV8wivm6F8i1FyA5wNACrnz7y2KYVAw3hHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // ENR for 89.20.106.51
+	"enode://adc02219b078ede1e15ca80bf6f6c4e8b42757df28831a8b76e648601a4b0377014dd7afb9179ca01166aa55aca3358aef27a153993f9b274e855bb5b9184097@188.225.46.184:30303",                                                                       // Aeru mainnet bootnode - Russia
+	"enode://2140edf8b69a46acd489a195b9eac4f41f207edea1085b1fcc2224bfa413b31ac832055d487f5ca6a472d8f6feefa2637151ed4b3fa4b3e45927e6846f0293f4@99.110.149.193:30303",                                                                       // Aeru mainnet bootnode - USA
+}
+
+// MainnetV5Bootnodes are the ENR records of the P2P bootstrap nodes running on
+// the Aeru mainnet (chain ID 192) for DiscV5 discovery protocol.
+var MainnetV5Bootnodes = []string{
+	// Aeru Core Bootstrap Nodes (DiscV5 ENR records)
+	"enr:-KW4QGVkhj9wh6VD1AR_U_Wkn4XtXPBxZb3TROJpHpYBLLY7cslbRHaoO23iB_3in-UIeCWmxfgdYQy33c7KTtynBZ-GAZqRiXVEg2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCExmBYlolzZWNwMjU2azGhAtRzvAkxra7LT_Svfb4X_jqhIlOW8wt-h_Gbf1xag7zUhHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // 198.96.88.150 - New Jersey, USA
+	"enr:-KW4QNcCSzPKGsw5kjLia9SY_3imSstOMHuiEZNGE2fXfZ4ePO4q_L6En02Qv4oHPw984N1KNBE94eO4WvO-C1jwfJGGAZry5Khig2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCEwqOwEolzZWNwMjU2azGhAjSnigMEUpCSEXT8Fbp5EPKg_21HxJRbKZPcbEWD3FpxhHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // 194.163.176.18 - Hub Europe, Second Node
+	"enr:-KW4QHrXVVBmp_cY1mw7pGBtbAKTbiIuKKf89nIlTeg0kwPUDnhBr85JHaMaAYuB-gWx14yzze4BSqsvnLgknCXZpzSGAZrs65myg2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCEublT64lzZWNwMjU2azGhA82rjHBmwa4Ibe74i-qX9YoctZ1EVhkRLwPn8mJjwRUUhHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // 185.185.83.235 - Original bootnode
+	"enr:-KW4QP2i-wzOEcSz77CghHLSIF-NrL5MKcSdQFxFKTZAW0jiHmsVTU8YselHeW-oq3FOoXs_s3cq3tF5AmClw-NyTE2GAZry-rbdg2V0aMnIhLLG0CiC6mCCaWSCdjSCaXCEWRRqM4lzZWNwMjU2azGhAkIIHeEpepkywV8wivm6F8i1FyA5wNACrnz7y2KYVAw3hHNuYXDAg3RjcIJ2X4N1ZHCCdl8", // 89.20.106.51 - Russia
 }
 
 // HoleskyBootnodes are the enode URLs of the P2P bootstrap nodes running on the
@@ -74,6 +88,9 @@ var V5Bootnodes = []string{
 
 const dnsPrefix = "enrtree://AKA3AM6LPBYEUDMVNU3BSVQJ5AD45Y7YPOHJLEF6W26QOE4VTUDPE@"
 
+// dnsPrefixAeru is the DNS discovery prefix for Aeru mainnet (Chain ID 192)
+const dnsPrefixAeru = "enrtree://APU7A52FVNVB7FLHRU3UFY4TABTIKP4BZNT7M2MITHT566WGKNY6W@"
+
 // KnownDNSNetwork returns the address of a public DNS-based node list for the given
 // genesis hash and protocol. See https://github.com/ethereum/discv4-dns-lists for more
 // information.
@@ -81,7 +98,8 @@ func KnownDNSNetwork(genesis common.Hash, protocol string) string {
 	var net string
 	switch genesis {
 	case MainnetGenesisHash:
-		net = "mainnet"
+		// Chain ID 192 (Aeru mainnet) - use custom DNS at seed.atheru.org
+		return dnsPrefixAeru + protocol + ".seed.atheru.org"
 	case SepoliaGenesisHash:
 		net = "sepolia"
 	case HoleskyGenesisHash:

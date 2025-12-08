@@ -23,14 +23,15 @@ Function AddToPath
   System::Call "advapi32::RegOpenKey(i 0x80000002, t'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', *i.r3) i.r4"
   IntCmp $4 0 0 done done
 
-  ; $4 = RegQueryValueEx($3, "PATH", (DWORD*)0, (DWORD*)0, &$1, ($2=NSIS_MAX_STRLEN, &$2))
+  ; Use a larger buffer for PATH (8192 chars) - supports Large Strings build
+  ; $4 = RegQueryValueEx($3, "PATH", (DWORD*)0, (DWORD*)0, &$1, ($2=8192, &$2))
   ; RegCloseKey($3)
-  System::Call "advapi32::RegQueryValueEx(i $3, t'PATH', i 0, i 0, t.r1, *i ${NSIS_MAX_STRLEN} r2) i.r4"
+  System::Call "advapi32::RegQueryValueEx(i $3, t'PATH', i 0, i 0, t.r1, *i 8192 r2) i.r4"
   System::Call "advapi32::RegCloseKey(i $3)"
 
   IntCmp $4 234 0 +4 +4 ; $4 == ERROR_MORE_DATA
-    DetailPrint "AddToPath: original length $2 > ${NSIS_MAX_STRLEN}"
-    MessageBox MB_OK "PATH not updated, original length $2 > ${NSIS_MAX_STRLEN}"
+    DetailPrint "AddToPath: original length $2 > 8192 (PATH too long)"
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Warning: PATH not updated. Your PATH is very long ($2 characters).$\n$\nAeru will still work, but you may need to add it to PATH manually.$\n$\nInstallation will continue."
     Goto done
 
   IntCmp $4 0 +5 ; $4 != NO_ERROR
@@ -51,14 +52,14 @@ Function AddToPath
   Pop $2
   StrCmp $2 "" 0 done
 
-  ; Prevent NSIS string overflow
+  ; Prevent NSIS string overflow (check against 8192 for Large Strings build)
   StrLen $2 $0
   StrLen $3 $1
   IntOp $2 $2 + $3
   IntOp $2 $2 + 2 ; $2 = strlen(dir) + strlen(PATH) + sizeof(";")
-  IntCmp $2 ${NSIS_MAX_STRLEN} +4 +4 0
-    DetailPrint "AddToPath: new length $2 > ${NSIS_MAX_STRLEN}"
-    MessageBox MB_OK "PATH not updated, new length $2 > ${NSIS_MAX_STRLEN}."
+  IntCmp $2 8192 +4 +4 0
+    DetailPrint "AddToPath: new length $2 > 8192 (PATH would be too long)"
+    MessageBox MB_ICONEXCLAMATION|MB_OK "Warning: PATH not updated. Adding Aeru would make PATH too long ($2 characters).$\n$\nAeru will still work, but you may need to add it to PATH manually.$\n$\nInstallation will continue."
     Goto done
 
   ; Append dir to PATH
@@ -101,14 +102,15 @@ Function un.RemoveFromPath
   System::Call "advapi32::RegOpenKey(i 0x80000002, t'SYSTEM\CurrentControlSet\Control\Session Manager\Environment', *i.r3) i.r4"
   IntCmp $4 0 0 done done
 
-  ; $4 = RegQueryValueEx($3, "PATH", (DWORD*)0, (DWORD*)0, &$1, ($2=NSIS_MAX_STRLEN, &$2))
+  ; Use a larger buffer for PATH (8192 chars) - supports Large Strings build
+  ; $4 = RegQueryValueEx($3, "PATH", (DWORD*)0, (DWORD*)0, &$1, ($2=8192, &$2))
   ; RegCloseKey($3)
-  System::Call "advapi32::RegQueryValueEx(i $3, t'PATH', i 0, i 0, t.r1, *i ${NSIS_MAX_STRLEN} r2) i.r4"
+  System::Call "advapi32::RegQueryValueEx(i $3, t'PATH', i 0, i 0, t.r1, *i 8192 r2) i.r4"
   System::Call "advapi32::RegCloseKey(i $3)"
 
   IntCmp $4 234 0 +4 +4 ; $4 == ERROR_MORE_DATA
-    DetailPrint "RemoveFromPath: original length $2 > ${NSIS_MAX_STRLEN}"
-    MessageBox MB_OK "PATH not updated, original length $2 > ${NSIS_MAX_STRLEN}"
+    DetailPrint "RemoveFromPath: original length $2 > 8192 (PATH too long)"
+    ; Don't show error on uninstall - just skip PATH removal
     Goto done
 
   IntCmp $4 0 +5 ; $4 != NO_ERROR

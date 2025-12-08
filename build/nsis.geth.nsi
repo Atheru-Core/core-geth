@@ -6,13 +6,13 @@
 # - BUILDVERSION, build id version
 #
 # The created installer executes the following steps:
-# 1. install geth for all users
+# 1. install aeru for all users
 # 2. install optional development tools such as abigen
 # 3. create an uninstaller
-# 4. configures the Windows firewall for geth
-# 5. create geth, attach and uninstall start menu entries
+# 4. configures the Windows firewall for aeru
+# 5. create aeru, attach and uninstall start menu entries
 # 6. configures the registry that allows Windows to manage the package through its platform tools
-# 7. adds the environment system wide variable ETHEREUM_SOCKET
+# 7. adds the environment system wide variable AERU_SOCKET
 # 8. adds the install directory to %PATH%
 #
 # Requirements:
@@ -29,9 +29,16 @@
 # - sign installer
 CRCCheck on
 
-!define GROUPNAME "Ethereum"
-!define APPNAME "Geth"
-!define DESCRIPTION "Official Go implementation of the Ethereum protocol"
+!define GROUPNAME "Aeru"
+!define APPNAME "Aeru Core"
+!define DESCRIPTION "Aeru Core - Ethereum client for Chain ID 192"
+
+# Define NSIS_MAX_STRLEN for Large Strings build (supports up to 8192 characters)
+# This must be defined BEFORE including PathUpdate.nsh
+!ifndef NSIS_MAX_STRLEN
+  !define NSIS_MAX_STRLEN 8192
+!endif
+
 !addplugindir .\
 
 # Require admin rights on NT6+ (When UAC is turned on)
@@ -55,7 +62,7 @@ ${EndIf}
 !macroend
 
 function .onInit
-  # make vars are global for all users since geth is installed global
+  # make vars are global for all users since aeru is installed global
   setShellVarContext all
   !insertmacro VerifyUserIsAdmin
 

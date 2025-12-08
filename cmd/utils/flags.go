@@ -1237,7 +1237,7 @@ func mustParseBootnodes(urls []string) []*enode.Node {
 // setBootstrapNodesV5 creates a list of bootstrap nodes from the command line
 // flags, reverting to pre-configured ones if none have been specified.
 func setBootstrapNodesV5(ctx *cli.Context, cfg *p2p.Config) {
-	urls := params.V5Bootnodes
+	urls := params.MainnetV5Bootnodes // Default to Aeru mainnet (Chain ID 192) V5 bootnodes
 	switch {
 	case ctx.IsSet(BootnodesFlag.Name):
 		urls = SplitAndTrim(ctx.String(BootnodesFlag.Name))
